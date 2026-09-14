@@ -34,3 +34,32 @@ jobs:
 
       - name: Integration suite (dummy Rails app)
         run: bundle exec rake test:integration
+
+  # The reference implementation, run against this checkout: the example
+  # depends on the gem by path, so an API change here that breaks a real app
+  # fails on the same pull request that made it.
+  example:
+    name: Support Inbox example
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 3
+      CI: true
+      RAILS_ENV: test
+    defaults:
+      run:
+        working-directory: examples/support_inbox
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: examples/support_inbox
+
+      - name: Prepare the test database
+        run: bin/rails db:test:prepare
+
+      - name: Run the example's suite
+        run: bin/rails test

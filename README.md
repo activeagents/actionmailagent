@@ -144,12 +144,26 @@ outcome (`reason: nil` when answered; a `LoopGuard` reason, `:no_answer`,
 
 ## Reference implementation
 
-`examples/support_inbox` in
-[activeagents/activeagents](https://github.com/activeagents/activeagents) is
-the app this was extracted from: tickets that arrive by email, triaged on the
-way in, answered by an agent with a solid_agent conversation, and visible on
-the actionagent dashboard as traces. Its `SupportMailbox` is ~130 lines of
-ticket-specific code on top of this gem's contract.
+[`examples/support_inbox`](examples/support_inbox) is the app this was
+extracted from, and it runs against this checkout: tickets that arrive by
+email, triaged on the way in, answered by an agent with a
+[solid_agent](https://github.com/activeagents/solid_agent) conversation, and
+visible on the [actionagent](https://github.com/activeagents/activeagent/tree/main/actionagent)
+dashboard as traces. Its `SupportMailbox` is ~130 lines of ticket-specific
+code on top of this gem's contract, and its suite runs in CI against the gem
+at HEAD.
+
+```sh
+cd examples/support_inbox
+bundle install
+bin/rails db:prepare db:seed
+bin/rails server
+```
+
+Then paste an email into
+`http://localhost:3000/rails/conductor/action_mailbox/inbound_emails/new` and
+watch it become a triaged, answered ticket at `http://localhost:3000`, with
+the traces at `/activeagents`.
 
 ## Development
 

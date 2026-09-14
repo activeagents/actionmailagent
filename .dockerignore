@@ -1,0 +1,29 @@
+# The Support Inbox example's image is built from this directory (see
+# examples/support_inbox/Dockerfile), so this is the ignore file that applies.
+.git
+.github
+.bundle
+pkg
+test
+tmp
+Gemfile
+Gemfile.lock
+bin
+
+examples/support_inbox/.git*
+examples/support_inbox/.bundle
+examples/support_inbox/.env*
+examples/support_inbox/config/master.key
+examples/support_inbox/config/credentials/*.key
+examples/support_inbox/log/*
+!examples/support_inbox/log/.keep
+examples/support_inbox/tmp/*
+!examples/support_inbox/tmp/.keep
+examples/support_inbox/tmp/pids/*
+!examples/support_inbox/tmp/pids/.keep
+examples/support_inbox/storage/*
+!examples/support_inbox/storage/.keep
+examples/support_inbox/db/*.sqlite3*
+examples/support_inbox/node_modules
+examples/support_inbox/public/assets
+examples/support_inbox/Dockerfile*
