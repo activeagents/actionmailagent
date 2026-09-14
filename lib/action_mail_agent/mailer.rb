@@ -56,7 +56,14 @@ module ActionMailAgent
         to: params.fetch(:to),
         from: params.fetch(:from) { ActionMailAgent.default_from },
         reply_to: params[:reply_to],
-        subject: reply_subject(params.fetch(:subject))
+        subject: reply_subject(params.fetch(:subject)),
+        # ActionMailer looks templates up under the mailer's own name alone —
+        # not, as a controller would, up the class chain — so a subclass
+        # without reply.text.erb of its own would raise MissingTemplate
+        # instead of rendering the templates shipped here. Searching every
+        # prefix restores the controller behaviour: a host's own templates
+        # win, and the gem's are the fallback.
+        template_path: _prefixes
       )
     end
 

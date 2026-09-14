@@ -25,6 +25,17 @@ class ActionMailAgent::MailerTest < ActionMailAgent::IntegrationTest
     assert_equal [ ActionMailAgent.default_from ], email.from
   end
 
+  test "a subclass with no templates of its own renders the gem's" do
+    branded = Class.new(ActionMailAgent::Mailer) do
+      def self.name = "BrandedMailer"
+    end
+
+    email = branded.with(to: "dana@example.com", subject: "Hi", body: "Refunded.").reply
+
+    assert_includes email.text_part.decoded, "Refunded."
+    assert_includes email.html_part.decoded, "<p>Refunded.</p>"
+  end
+
   test "the delimiter and signature are rendered into both parts" do
     with_config(reply_delimiter: "##- reply above -##") do
       email = ActionMailAgent::Mailer.with(to: "dana@example.com", subject: "Hi", body: "Refunded.", signature: "The Support Team").reply
