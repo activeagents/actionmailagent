@@ -1,0 +1,7 @@
+<% if @delimiter.present? %>
+<p style="color: #6b7280; font-size: 12px; margin: 0 0 16px;"><%= @delimiter %></p>
+<% end %>
+<%= simple_format(@body) %>
+<% if @signature.present? %>
+<%= simple_format(@signature) %>
+<% end %>

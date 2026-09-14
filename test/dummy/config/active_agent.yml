@@ -1,0 +1,5 @@
+# The framework's mock provider: no credentials, no network, and a reply that
+# is the prompt in pig latin — enough to prove the exchange end to end.
+test:
+  mock:
+    service: "Mock"
